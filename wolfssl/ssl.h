@@ -808,7 +808,7 @@ WOLFSSL_API void wolfSSL_set_bio(WOLFSSL*, WOLFSSL_BIO* rd, WOLFSSL_BIO* wr);
 WOLFSSL_API int  wolfSSL_add_all_algorithms(void);
 
 #ifdef OPENSSL_EXTRA
-WOLFSSL_API int  wolfSSL_OPENSSL_add_all_algorithms_noconf(void);
+WOLFSSL_API int  wolfSSL_OpenSSL_add_all_algorithms_noconf(void);
 #endif
 
 #ifndef NO_FILESYSTEM
@@ -2931,6 +2931,7 @@ WOLFSSL_API WOLFSSL_ASN1_TIME *wolfSSL_ASN1_TIME_to_generalizedtime(WOLFSSL_ASN1
                                                                 WOLFSSL_ASN1_TIME **out);
 WOLFSSL_API int wolfSSL_i2c_ASN1_INTEGER(WOLFSSL_ASN1_INTEGER *a, unsigned char **pp);
 WOLFSSL_API int wolfSSL_X509_CA_num(WOLFSSL_X509_STORE *store);
+WOLFSSL_API long wolfSSL_X509_get_version(const WOLFSSL_X509 *x);
 #endif /* OPENSSL_EXTRA */
 
 #ifdef HAVE_PK_CALLBACKS

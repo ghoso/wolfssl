@@ -18599,11 +18599,11 @@ static void test_wolfSSL_X509_get_serialNumber(void)
 }
 
 
-static void test_wolfSSL_OPENSSL_add_all_algorithms(void){
+static void test_wolfSSL_OpenSSL_add_all_algorithms(void){
 #if defined(OPENSSL_EXTRA)
-    printf(testingFmt, "wolfSSL_OPENSSL_add_all_algorithms()");
+    printf(testingFmt, "wolfSSL_OpenSSL_add_all_algorithms()");
 
-    AssertIntEQ(wolfSSL_OPENSSL_add_all_algorithms_noconf(),WOLFSSL_SUCCESS);
+    AssertIntEQ(wolfSSL_OpenSSL_add_all_algorithms_noconf(),WOLFSSL_SUCCESS);
     wolfSSL_Cleanup();
 
     printf(resultFmt, passed);
@@ -18785,6 +18785,8 @@ static void test_wolfSSL_X509_check_ca(void){
 #if defined(OPENSSL_EXTRA) && !defined(NO_RSA) && !defined(NO_FILESYSTEM)
     WOLFSSL_X509 *x509;
 
+    printf(testingFmt, "wolfSSL_X509_check_ca()");
+
     x509 = wolfSSL_X509_load_certificate_file(svrCertFile, WOLFSSL_FILETYPE_PEM);
     AssertIntEQ(wolfSSL_X509_check_ca(x509), 1);
     wolfSSL_X509_free(x509);
@@ -18792,6 +18794,23 @@ static void test_wolfSSL_X509_check_ca(void){
     x509 = wolfSSL_X509_load_certificate_file(ntruCertFile, WOLFSSL_FILETYPE_PEM);
     AssertIntEQ(wolfSSL_X509_check_ca(x509), 0);
     wolfSSL_X509_free(x509);
+
+    printf(resultFmt, passed);
+#endif
+}
+
+static void test_wolfSSL_X509_get_version(void){
+#if defined(OPENSSL_EXTRA) && !defined(NO_FILESYSTEM)
+    WOLFSSL_X509 *x509;
+
+    printf(testingFmt, "wolfSSL_X509_get_version()");
+
+    x509 = wolfSSL_X509_load_certificate_file(svrCertFile, WOLFSSL_FILETYPE_PEM);
+    AssertNotNull(x509);
+    AssertIntEQ((int)wolfSSL_X509_get_version(x509), 2);
+    wolfSSL_X509_free(x509);
+
+    printf(resultFmt, passed);
 #endif
 }
 
@@ -19828,15 +19847,17 @@ static void test_wolfSSL_X509_CRL(void)
 
 static void test_wolfSSL_PEM_read_X509(void)
 {
-#if defined(OPENSSL_EXTRA) && !defined(NO_FILESYSTEM)
+#if defined(OPENSSL_EXTRA) && defined(HAVE_CRL) && !defined(NO_FILESYSTEM)
     X509 *x509 = NULL;
     XFILE fp;
 
+    printf(testingFmt, "wolfSSL_PEM_read_X509");
     AssertNotNull(fp = XFOPEN(svrCertFile, "rb"));
     AssertNotNull(x509 = (X509 *)PEM_read_X509(fp, (X509 **)NULL, NULL, NULL));
     X509_free(x509);
     XFCLOSE(fp);
 
+    printf(resultFmt, passed);
 #endif
 }
 
@@ -19849,6 +19870,7 @@ static void test_wolfSSL_X509_NAME_ENTRY_get_object()
     X509_NAME_ENTRY *ne = NULL;
     ASN1_OBJECT *object = NULL;
 
+    printf(testingFmt, "wolfSSL_X509_NAME_ENTRY_get_object");
     x509 = wolfSSL_X509_load_certificate_file(cliCertFile, WOLFSSL_FILETYPE_PEM);
     AssertNotNull(x509);
     name = X509_get_subject_name(x509);
@@ -19860,6 +19882,8 @@ static void test_wolfSSL_X509_NAME_ENTRY_get_object()
     AssertNotNull(object = X509_NAME_ENTRY_get_object(ne));
     
     X509_free(x509);
+
+    printf(resultFmt, passed);
 #endif
 }
 
@@ -20076,12 +20100,13 @@ void ApiTest(void)
     test_wolfSSL_X509_CRL();
     test_wolfSSL_PEM_read_X509();
     test_wolfSSL_X509_NAME_ENTRY_get_object();
-    test_wolfSSL_OPENSSL_add_all_algorithms();
+    test_wolfSSL_OpenSSL_add_all_algorithms();
     test_wolfSSL_ASN1_STRING_print_ex();
     test_wolfSSL_ASN1_TIME_to_generalizedtime();
     test_wolfSSL_i2c_ASN1_INTEGER();
     test_wolfSSL_X509_check_ca();
     test_wolfSSL_X509_CA_num();
+    test_wolfSSL_X509_get_version();
     /* test the no op functions for compatibility */
     test_no_op_functions();
 
