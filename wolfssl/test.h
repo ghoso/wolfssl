@@ -1023,7 +1023,7 @@ static WC_INLINE void tcp_accept(SOCKET_T* sockfd, SOCKET_T* clientfd,
 
         if (ready_file) {
         #if !defined(NO_FILESYSTEM) || defined(FORCE_BUFFER_TEST)
-            FILE* srf = NULL;
+            XFILE srf = NULL;
             if (args)
                 ready = args->signal;
 
@@ -1245,7 +1245,7 @@ static WC_INLINE void OCSPRespFreeCb(void* ioCtx, unsigned char* response)
     {
         int ret;
         long int fileSz;
-        FILE* file;
+        XFILE file;
 
         if (fname == NULL || buf == NULL || bufLen == NULL)
             return BAD_FUNC_ARG;
@@ -1548,7 +1548,7 @@ static WC_INLINE void CaCb(unsigned char* der, int sz, int type)
     {
         #if !defined(NO_FILESYSTEM) || defined(FORCE_BUFFER_TEST)
             int depth, res;
-            FILE* file;
+            XFILE file;
             for(depth = 0; depth <= MAX_WOLF_ROOT_DEPTH; depth++) {
                 file = fopen(ntruKeyFile, "rb");
                 if (file != NULL) {
