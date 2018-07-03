@@ -28717,7 +28717,7 @@ void* wolfSSL_GetDhAgreeCtx(WOLFSSL* ssl)
             i = XFTELL(bp->file);
             if (i < 0)
                 return NULL;
-            if (XFSEEK(bp->file, 0, SEEK_END) != 0)
+            if (XFSEEK(bp->file, 0, XSEEK_END) != 0)
                 return NULL;
             l = XFTELL(bp->file);
             if (l < 0)
@@ -28805,7 +28805,7 @@ void* wolfSSL_GetDhAgreeCtx(WOLFSSL* ssl)
             return NULL;
         }
 
-        if (XFSEEK(fp, 0, SEEK_END) != 0)
+        if (XFSEEK(fp, 0, XSEEK_END) != 0)
             return NULL;
         l = XFTELL(fp);
         if (l < 0)
@@ -30724,7 +30724,7 @@ WOLFSSL_DH *wolfSSL_PEM_read_bio_DHparams(WOLFSSL_BIO *bio, WOLFSSL_DH **x,
     }
     else if (bio->type == WOLFSSL_BIO_FILE) {
         /* Read whole file into a new buffer. */
-        XFSEEK(bio->file, 0, SEEK_END);
+        XFSEEK(bio->file, 0, XSEEK_END);
         sz = XFTELL(bio->file);
         XFSEEK(bio->file, 0, SEEK_SET);
         if (sz <= 0L)
