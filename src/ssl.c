@@ -29837,7 +29837,6 @@ void* wolfSSL_GetDhAgreeCtx(WOLFSSL* ssl)
         if (o == NULL) {
             return -1;
         }
-
         if ((id = GetObjectId(o->obj, &idx, &oid, o->grp, o->objSz)) < 0) {
             WOLFSSL_MSG("Issue getting OID of object");
             return -1;
