@@ -31139,7 +31139,6 @@ void wolfSSL_ERR_load_crypto_strings(void)
     return;
 }
 
-<<<<<<< HEAD
 unsigned long wolfSSL_ERR_peek_last_error(void)
 {
     WOLFSSL_ENTER("wolfSSL_ERR_peek_last_error");
@@ -31160,10 +31159,7 @@ unsigned long wolfSSL_ERR_peek_last_error(void)
     return (unsigned long)(0 - NOT_COMPILED_IN);
 #endif
 }
-#endif
 
-=======
->>>>>>> ERR_peek_last_error() and SSL_get_SSL_CTX reference error on opensslextra.
 #ifndef NO_WOLFSSL_STUB
 int wolfSSL_FIPS_mode(void)
 {
@@ -32069,7 +32065,7 @@ BIO *wolfSSL_SSL_get_rbio(const WOLFSSL *s)
     /* Nginx sets the buffer size if the read BIO is different to write BIO.
      * The setting buffer size doesn't do anything so return NULL for both.
      */
-    return NULL;
+    return s->biord;
 }
 BIO *wolfSSL_SSL_get_wbio(const WOLFSSL *s)
 {
@@ -32078,7 +32074,7 @@ BIO *wolfSSL_SSL_get_wbio(const WOLFSSL *s)
     /* Nginx sets the buffer size if the read BIO is different to write BIO.
      * The setting buffer size doesn't do anything so return NULL for both.
      */
-    return NULL;
+    return s->biowr;
 }
 
 int wolfSSL_SSL_do_handshake(WOLFSSL *s)

@@ -5829,14 +5829,8 @@ WOLFSSL_API int wolfSSL_X509_version(WOLFSSL_X509*);
     \sa XREWIND
     \sa XFSEEK
 */
-<<<<<<< HEAD
-WOLFSSL_API WOLFSSL_X509*
-        wolfSSL_X509_d2i_fp(WOLFSSL_X509** x509, FILE* file);
-
-=======
     WOLFSSL_API WOLFSSL_X509*
         wolfSSL_X509_d2i_fp(WOLFSSL_X509** x509, FILE* file);
->>>>>>> PEM_read_X509_CRL
 /*!
     \ingroup CertsKeys
 
